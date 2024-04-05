@@ -1,0 +1,31 @@
+﻿@model INTERNS_HUB.Models.UserLoginCls
+@{
+    ViewBag.Title = "CandidateLogin_PageLoad";
+    Layout = "~/Views/Shared/RegistrationFormLayout.cshtml";
+}
+
+@using (Html.BeginForm("CandidateLogin_BtnClick", "NormalUser", FormMethod.Post))
+{
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Candidate Login</div>
+                    <div class="card-body">
+                        @Html.LabelFor(m => m.Email, "Email")
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @required = "required" })
+
+                        @Html.LabelFor(m => m.LoginPassword, "Password")
+                        @Html.PasswordFor(m => m.LoginPassword, new { @class = "form-control", @required = "required" })
+
+                        <div class="form-group mt-3 text-center">
+                            <a href="@Url.Action("UserRegistration_PageLoad","NormalUser")" id="registerLink">Not Registered? Register Here</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

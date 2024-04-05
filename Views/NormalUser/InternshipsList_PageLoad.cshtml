@@ -1,0 +1,59 @@
+﻿@model List<sp_GetJobs_Result>
+@{
+    Layout = "~/Views/Shared/UserDashboardLayout.cshtml";
+}
+
+<style>
+    .list-group-item {
+        background-color: #f5f5dc;
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+</style>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-warning" role="alert">
+        @TempData["Message"]
+    </div>
+}
+
+<div class="container">
+    <h2>Posted Jobs</h2>
+    <ul class="list-group">
+        @foreach (var job in Model)
+        {
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h4><i class="bi bi-briefcase"></i> @job.Title</h4>
+                        <p><i class="bi bi-info-square"></i> @job.Description</p>
+                        <p><i class="bi bi-geo-alt"></i> <strong>Location:</strong> @job.Location</p>
+                        <p><i class="bi bi-card-list"></i> <strong>Type:</strong> @job.Type</p>
+                        <p><i class="bi bi-star"></i> <strong>Skills Required:</strong> @job.SkillsRequired</p>
+                        <p><i class="bi bi-calendar"></i> <strong>Start Date:</strong> @job.StartDate.ToShortDateString()</p>
+                        <p><i class="bi bi-clock"></i> <strong>Duration:</strong> @job.Duration</p>
+                        <p><i class="bi bi-currency-dollar"></i> <strong>Stipend:</strong> @job.Stipend.ToString("C")</p>
+                        <p><i class="bi bi-person"></i> <strong>Openings:</strong> @job.Openings</p>
+                        <p><i class="bi bi-calendar"></i> <strong>Deadline:</strong> @job.Deadline.ToShortDateString()</p>
+                        <p><i class="bi bi-house"></i> <strong>Company:</strong> @job.CompanyName</p>
+                        <p><i class="bi bi-envelope"></i> <strong>Contact Email:</strong> @job.ContactEmail</p>
+                    </div>
+                    <div class="col-sm-4 text-right">
+                        @if (Model.Any(u => u.UserId == (int)Session["UserId"] && u.InternshipsId == job.Id))
+                        {
+                            <button class="btn btn-success" disabled>Applied</button>
+                        }
+                        else
+                        {
+                            <form method="post" action="@Url.Action("UserApplyingJob_BtnClick", "NormalUser")">
+                                @Html.Hidden("jobId", job.Id)
+                                <button type="submit" class="btn btn-primary">Apply Now <i class="bi bi-chevron-right"></i></button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

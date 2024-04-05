@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "UserDashboard_PageLoad";
+    Layout = "~/Views/Shared/UserDashboardLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="special-field p-4 shadow">
+        <h1>Welcome @ViewBag.FullName</h1>
+        <p class="mt-3">Please visit Internship page to apply for a new internship or check the latest status of your applied internships.</p>
+        <div class="mt-3">
+            <a class="btn btn-primary" href="@Url.Action("InternshipsList_PageLoad","NormalUser")">Internships</a>
+            <a class="btn btn-secondary" href="@Url.Action("UserProfile_PageLoad","NormalUser")">Profile</a>
+        </div>
+    </div>
+</div>
+

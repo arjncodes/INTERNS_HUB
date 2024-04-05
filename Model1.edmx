@@ -1,0 +1,744 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="INTERNS_HUBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CompanyApplication">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="ApplicationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="InternshipsId" Type="int" Nullable="false" />
+          <Property Name="AppliedDate" Type="datetime" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompanyRegistrations">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CompanyDescription" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CompanyLocation" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Industry" Type="varchar" MaxLength="155" Nullable="false" />
+          <Property Name="Website" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CompanyEmail" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CompanyPassword" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Internships">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="155" Nullable="false" />
+          <Property Name="SkillsRequired" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="Duration" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Stipend" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Openings" Type="int" Nullable="false" />
+          <Property Name="Deadline" Type="datetime" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ContactEmail" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
+        </EntityType>
+        <EntityType Name="Skills">
+          <Key>
+            <PropertyRef Name="SkillsId" />
+          </Key>
+          <Property Name="SkillsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SkillsName" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserLoginCredentials">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="LoginPassword" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Gender" Type="varchar" MaxLength="50" />
+          <Property Name="Place" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="HighestQualification" Type="varchar" MaxLength="255" />
+          <Property Name="YearOfCompletion" Type="varchar" MaxLength="255" />
+          <Property Name="Experiance" Type="varchar" MaxLength="255" />
+          <Property Name="ResumeFile" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="UserSkill">
+          <Key>
+            <PropertyRef Name="UserSkillsId" />
+          </Key>
+          <Property Name="UserSkillsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SkillsId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Internships_CompanyRegistrations">
+          <End Role="CompanyRegistrations" Type="Self.CompanyRegistrations" Multiplicity="0..1" />
+          <End Role="Internships" Type="Self.Internships" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyRegistrations">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Internships">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfile_UserLoginCredentials">
+          <End Role="UserLoginCredentials" Type="Self.UserLoginCredentials" Multiplicity="1" />
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserLoginCredentials">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSkill_Skills">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
+          <End Role="UserSkill" Type="Self.UserSkill" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="SkillsId" />
+            </Principal>
+            <Dependent Role="UserSkill">
+              <PropertyRef Name="UserSkillsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSkill_UserLoginCredentials">
+          <End Role="UserLoginCredentials" Type="Self.UserLoginCredentials" Multiplicity="1" />
+          <End Role="UserSkill" Type="Self.UserSkill" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserLoginCredentials">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserSkill">
+              <PropertyRef Name="UserSkillsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_GetApplicants" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CompanyId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_GetInternshipsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CompanyId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_GetJobs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetMaxId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetUserDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_InsertCompanyApplication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="CompanyId" Type="int" Mode="In" />
+          <Parameter Name="InternshipId" Type="int" Mode="In" />
+          <Parameter Name="AppliedDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_PostInternships" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Title" Type="varchar" Mode="In" />
+          <Parameter Name="Description" Type="varchar" Mode="In" />
+          <Parameter Name="Location" Type="varchar" Mode="In" />
+          <Parameter Name="Type" Type="varchar" Mode="In" />
+          <Parameter Name="SkillsRequired" Type="varchar" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="Duration" Type="varchar" Mode="In" />
+          <Parameter Name="Stipend" Type="decimal" Mode="In" />
+          <Parameter Name="Openings" Type="int" Mode="In" />
+          <Parameter Name="Deadline" Type="datetime" Mode="In" />
+          <Parameter Name="CompanyName" Type="varchar" Mode="In" />
+          <Parameter Name="ContactEmail" Type="varchar" Mode="In" />
+          <Parameter Name="CompanyId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_RegisterCompany" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CmpName" Type="varchar" Mode="In" />
+          <Parameter Name="CmpDesc" Type="varchar" Mode="In" />
+          <Parameter Name="CmpLocation" Type="varchar" Mode="In" />
+          <Parameter Name="Industry" Type="varchar" Mode="In" />
+          <Parameter Name="Website" Type="varchar" Mode="In" />
+          <Parameter Name="CmpEmail" Type="varchar" Mode="In" />
+          <Parameter Name="CmpPassword" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_UpdateProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="Age" Type="int" Mode="In" />
+          <Parameter Name="Gender" Type="varchar" Mode="In" />
+          <Parameter Name="Place" Type="varchar" Mode="In" />
+          <Parameter Name="Phone" Type="varchar" Mode="In" />
+          <Parameter Name="HighestQualification" Type="varchar" Mode="In" />
+          <Parameter Name="YearOfCompletion" Type="datetime" Mode="In" />
+          <Parameter Name="Experiance" Type="varchar" Mode="In" />
+          <Parameter Name="ResumeFile" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_UserRegister" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="FullName" Type="varchar" Mode="In" />
+          <Parameter Name="LoginPassword" Type="varchar" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="INTERNS_HUBModelStoreContainer">
+          <EntitySet Name="CompanyApplication" EntityType="Self.CompanyApplication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyRegistrations" EntityType="Self.CompanyRegistrations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Internships" EntityType="Self.Internships" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLoginCredentials" EntityType="Self.UserLoginCredentials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserSkill" EntityType="Self.UserSkill" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Internships_CompanyRegistrations" Association="Self.FK_Internships_CompanyRegistrations">
+            <End Role="CompanyRegistrations" EntitySet="CompanyRegistrations" />
+            <End Role="Internships" EntitySet="Internships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfile_UserLoginCredentials" Association="Self.FK_UserProfile_UserLoginCredentials">
+            <End Role="UserLoginCredentials" EntitySet="UserLoginCredentials" />
+            <End Role="UserProfile" EntitySet="UserProfile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSkill_Skills" Association="Self.FK_UserSkill_Skills">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="UserSkill" EntitySet="UserSkill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSkill_UserLoginCredentials" Association="Self.FK_UserSkill_UserLoginCredentials">
+            <End Role="UserLoginCredentials" EntitySet="UserLoginCredentials" />
+            <End Role="UserSkill" EntitySet="UserSkill" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="INTERNS_HUBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="UserLoginCredential">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LoginPassword" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserProfile" Relationship="INTERNS_HUBModel.FK_UserProfile_UserLoginCredentials" FromRole="UserLoginCredential" ToRole="UserProfile" />
+          <NavigationProperty Name="UserSkill" Relationship="INTERNS_HUBModel.FK_UserSkill_UserLoginCredentials" FromRole="UserLoginCredential" ToRole="UserSkill" />
+        </EntityType>
+        <EntityContainer Name="INTERNS_HUBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserLoginCredentials" EntityType="Self.UserLoginCredential" />
+          <FunctionImport Name="sp_GetMaxId" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="sp_UserRegister">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="FullName" Mode="In" Type="String" />
+            <Parameter Name="LoginPassword" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_UpdateProfile">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="Age" Mode="In" Type="Int32" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+            <Parameter Name="Place" Mode="In" Type="String" />
+            <Parameter Name="Phone" Mode="In" Type="String" />
+            <Parameter Name="HighestQualification" Mode="In" Type="String" />
+            <Parameter Name="YearOfCompletion" Mode="In" Type="DateTime" />
+            <Parameter Name="Experiance" Mode="In" Type="String" />
+            <Parameter Name="ResumeFile" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="UserProfiles" EntityType="INTERNS_HUBModel.UserProfile" />
+          <AssociationSet Name="FK_UserProfile_UserLoginCredentials" Association="INTERNS_HUBModel.FK_UserProfile_UserLoginCredentials">
+            <End Role="UserLoginCredential" EntitySet="UserLoginCredentials" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <EntitySet Name="Skills" EntityType="INTERNS_HUBModel.Skill" />
+          <EntitySet Name="UserSkills" EntityType="INTERNS_HUBModel.UserSkill" />
+          <AssociationSet Name="FK_UserSkill_Skills" Association="INTERNS_HUBModel.FK_UserSkill_Skills">
+            <End Role="Skill" EntitySet="Skills" />
+            <End Role="UserSkill" EntitySet="UserSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSkill_UserLoginCredentials" Association="INTERNS_HUBModel.FK_UserSkill_UserLoginCredentials">
+            <End Role="UserLoginCredential" EntitySet="UserLoginCredentials" />
+            <End Role="UserSkill" EntitySet="UserSkills" />
+          </AssociationSet>
+          <EntitySet Name="CompanyRegistrations" EntityType="INTERNS_HUBModel.CompanyRegistration" />
+          <FunctionImport Name="sp_PostInternships">
+            <Parameter Name="Title" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="Location" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+            <Parameter Name="SkillsRequired" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Duration" Mode="In" Type="String" />
+            <Parameter Name="Stipend" Mode="In" Type="Decimal" />
+            <Parameter Name="Openings" Mode="In" Type="Int32" />
+            <Parameter Name="Deadline" Mode="In" Type="DateTime" />
+            <Parameter Name="CompanyName" Mode="In" Type="String" />
+            <Parameter Name="ContactEmail" Mode="In" Type="String" />
+            <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RegisterCompany">
+            <Parameter Name="CmpName" Mode="In" Type="String" />
+            <Parameter Name="CmpDesc" Mode="In" Type="String" />
+            <Parameter Name="CmpLocation" Mode="In" Type="String" />
+            <Parameter Name="Industry" Mode="In" Type="String" />
+            <Parameter Name="Website" Mode="In" Type="String" />
+            <Parameter Name="CmpEmail" Mode="In" Type="String" />
+            <Parameter Name="CmpPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Internships" EntityType="INTERNS_HUBModel.Internship" />
+          <AssociationSet Name="FK_Internships_CompanyRegistrations" Association="INTERNS_HUBModel.FK_Internships_CompanyRegistrations">
+            <End Role="CompanyRegistration" EntitySet="CompanyRegistrations" />
+            <End Role="Internship" EntitySet="Internships" />
+          </AssociationSet>
+          <FunctionImport Name="sp_GetInternshipsList" ReturnType="Collection(INTERNS_HUBModel.sp_GetInternshipsList_Result)" >
+          <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetJobs" ReturnType="Collection(INTERNS_HUBModel.sp_GetJobs_Result)" />
+          <FunctionImport Name="sp_InsertCompanyApplication">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+            <Parameter Name="InternshipId" Mode="In" Type="Int32" />
+            <Parameter Name="AppliedDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="CompanyApplications" EntityType="INTERNS_HUBModel.CompanyApplication" />
+          <FunctionImport Name="sp_GetUserDetails" ReturnType="Collection(INTERNS_HUBModel.sp_GetUserDetails_Result)">
+          <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetCompanyApplications" ReturnType="Collection(INTERNS_HUBModel.sp_GetCompanyApplications_Result)">
+          <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAppliedJobsForCompany" ReturnType="Collection(INTERNS_HUBModel.GetAppliedJobsForCompany_Result)">
+          <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetApplicants" ReturnType="Collection(INTERNS_HUBModel.sp_GetApplicants_Result)">
+          <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Place" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HighestQualification" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="YearOfCompletion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Experiance" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ResumeFile" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserLoginCredential" Relationship="INTERNS_HUBModel.FK_UserProfile_UserLoginCredentials" FromRole="UserProfile" ToRole="UserLoginCredential" />
+        </EntityType>
+        <Association Name="FK_UserProfile_UserLoginCredentials">
+          <End Type="INTERNS_HUBModel.UserLoginCredential" Role="UserLoginCredential" Multiplicity="1" />
+          <End Type="INTERNS_HUBModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserLoginCredential">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="SkillsId" />
+          </Key>
+          <Property Name="SkillsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SkillsName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserSkill" Relationship="INTERNS_HUBModel.FK_UserSkill_Skills" FromRole="Skill" ToRole="UserSkill" />
+        </EntityType>
+        <EntityType Name="UserSkill">
+          <Key>
+            <PropertyRef Name="UserSkillsId" />
+          </Key>
+          <Property Name="UserSkillsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="SkillsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Skill" Relationship="INTERNS_HUBModel.FK_UserSkill_Skills" FromRole="UserSkill" ToRole="Skill" />
+          <NavigationProperty Name="UserLoginCredential" Relationship="INTERNS_HUBModel.FK_UserSkill_UserLoginCredentials" FromRole="UserSkill" ToRole="UserLoginCredential" />
+        </EntityType>
+        <Association Name="FK_UserSkill_Skills">
+          <End Type="INTERNS_HUBModel.Skill" Role="Skill" Multiplicity="1" />
+          <End Type="INTERNS_HUBModel.UserSkill" Role="UserSkill" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="SkillsId" />
+            </Principal>
+            <Dependent Role="UserSkill">
+              <PropertyRef Name="UserSkillsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSkill_UserLoginCredentials">
+          <End Type="INTERNS_HUBModel.UserLoginCredential" Role="UserLoginCredential" Multiplicity="1" />
+          <End Type="INTERNS_HUBModel.UserSkill" Role="UserSkill" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserLoginCredential">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserSkill">
+              <PropertyRef Name="UserSkillsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CompanyRegistration">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyDescription" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyLocation" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Industry" Type="String" Nullable="false" MaxLength="155" FixedLength="false" Unicode="false" />
+          <Property Name="Website" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyEmail" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyPassword" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Internships" Relationship="INTERNS_HUBModel.FK_Internships_CompanyRegistrations" FromRole="CompanyRegistration" ToRole="Internship" />
+        </EntityType>
+        <EntityType Name="Internship">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="155" FixedLength="false" Unicode="false" />
+          <Property Name="SkillsRequired" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Duration" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Stipend" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Openings" Type="Int32" Nullable="false" />
+          <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ContactEmail" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyId" Type="Int32" />
+          <NavigationProperty Name="CompanyRegistration" Relationship="INTERNS_HUBModel.FK_Internships_CompanyRegistrations" FromRole="Internship" ToRole="CompanyRegistration" />
+        </EntityType>
+        <Association Name="FK_Internships_CompanyRegistrations">
+          <End Type="INTERNS_HUBModel.CompanyRegistration" Role="CompanyRegistration" Multiplicity="0..1" />
+          <End Type="INTERNS_HUBModel.Internship" Role="Internship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyRegistration">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Internship">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_GetInternshipsList_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Location" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="155" />
+          <Property Type="String" Name="SkillsRequired" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Duration" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="Stipend" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="Openings" Nullable="false" />
+          <Property Type="DateTime" Name="Deadline" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CompanyName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ContactEmail" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="CompanyId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetJobs_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Location" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="155" />
+          <Property Type="String" Name="SkillsRequired" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Duration" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="Stipend" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="Openings" Nullable="false" />
+          <Property Type="DateTime" Name="Deadline" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CompanyName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ContactEmail" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="CompanyId" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="CompanyApplication">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="ApplicationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="InternshipsId" Type="Int32" Nullable="false" />
+          <Property Name="AppliedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="sp_GetUserDetails_Result">
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="FullName" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Place" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HighestQualification" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="YearOfCompletion" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Experiance" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ResumeFile" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="FullName1" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Email1" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="sp_GetCompanyApplications_Result">
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="InternshipsId" Nullable="false" />
+          <Property Type="DateTime" Name="AppliedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="FullName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="UserId1" Nullable="false" />
+          <Property Type="String" Name="Email1" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="FullName1" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Place" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HighestQualification" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="YearOfCompletion" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Experiance" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ResumeFile" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="GetAppliedJobsForCompany_Result">
+          <Property Type="String" Name="InternshipName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="AppliedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="FullName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="UserEmail" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Place" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HighestQualification" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="YearOfCompletion" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Experience" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ResumeFileName" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="sp_GetApplicants_Result">
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="String" Name="FullName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="UserEmail" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Place" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HighestQualification" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="YearOfCompletion" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Experiance" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ResumeFile" Nullable="true" MaxLength="255" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="INTERNS_HUBModelStoreContainer" CdmEntityContainer="INTERNS_HUBEntities">
+          <EntitySetMapping Name="UserLoginCredentials">
+            <EntityTypeMapping TypeName="INTERNS_HUBModel.UserLoginCredential">
+              <MappingFragment StoreEntitySet="UserLoginCredentials">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="LoginPassword" ColumnName="LoginPassword" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetMaxId" FunctionName="INTERNS_HUBModel.Store.sp_GetMaxId" />
+          <FunctionImportMapping FunctionImportName="sp_UserRegister" FunctionName="INTERNS_HUBModel.Store.sp_UserRegister" />
+          <FunctionImportMapping FunctionImportName="sp_UpdateProfile" FunctionName="INTERNS_HUBModel.Store.sp_UpdateProfile" />
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="INTERNS_HUBModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="ResumeFile" ColumnName="ResumeFile" />
+                <ScalarProperty Name="Experiance" ColumnName="Experiance" />
+                <ScalarProperty Name="YearOfCompletion" ColumnName="YearOfCompletion" />
+                <ScalarProperty Name="HighestQualification" ColumnName="HighestQualification" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Place" ColumnName="Place" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="INTERNS_HUBModel.Skill">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="SkillsName" ColumnName="SkillsName" />
+                <ScalarProperty Name="SkillsId" ColumnName="SkillsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSkills">
+            <EntityTypeMapping TypeName="INTERNS_HUBModel.UserSkill">
+              <MappingFragment StoreEntitySet="UserSkill">
+                <ScalarProperty Name="SkillsId" ColumnName="SkillsId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserSkillsId" ColumnName="UserSkillsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyRegistrations">
+            <EntityTypeMapping TypeName="INTERNS_HUBModel.CompanyRegistration">
+              <MappingFragment StoreEntitySet="CompanyRegistrations">
+                <ScalarProperty Name="CompanyPassword" ColumnName="CompanyPassword" />
+                <ScalarProperty Name="CompanyEmail" ColumnName="CompanyEmail" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Industry" ColumnName="Industry" />
+                <ScalarProperty Name="CompanyLocation" ColumnName="CompanyLocation" />
+                <ScalarProperty Name="CompanyDescription" ColumnName="CompanyDescription" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_PostInternships" FunctionName="INTERNS_HUBModel.Store.sp_PostInternships" />
+          <FunctionImportMapping FunctionImportName="sp_RegisterCompany" FunctionName="INTERNS_HUBModel.Store.sp_RegisterCompany" />
+          <EntitySetMapping Name="Internships">
+            <EntityTypeMapping TypeName="INTERNS_HUBModel.Internship">
+              <MappingFragment StoreEntitySet="Internships">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="Openings" ColumnName="Openings" />
+                <ScalarProperty Name="Stipend" ColumnName="Stipend" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="SkillsRequired" ColumnName="SkillsRequired" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetInternshipsList" FunctionName="INTERNS_HUBModel.Store.sp_GetInternshipsList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="INTERNS_HUBModel.sp_GetInternshipsList_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="SkillsRequired" ColumnName="SkillsRequired" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Stipend" ColumnName="Stipend" />
+                <ScalarProperty Name="Openings" ColumnName="Openings" />
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetJobs" FunctionName="INTERNS_HUBModel.Store.sp_GetJobs">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="INTERNS_HUBModel.sp_GetJobs_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="SkillsRequired" ColumnName="SkillsRequired" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Stipend" ColumnName="Stipend" />
+                <ScalarProperty Name="Openings" ColumnName="Openings" />
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_InsertCompanyApplication" FunctionName="INTERNS_HUBModel.Store.sp_InsertCompanyApplication" />
+          <EntitySetMapping Name="CompanyApplications">
+            <EntityTypeMapping TypeName="INTERNS_HUBModel.CompanyApplication">
+              <MappingFragment StoreEntitySet="CompanyApplication">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="InternshipsId" ColumnName="InternshipsId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetUserDetails" FunctionName="INTERNS_HUBModel.Store.sp_GetUserDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="INTERNS_HUBModel.sp_GetUserDetails_Result">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Place" ColumnName="Place" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="HighestQualification" ColumnName="HighestQualification" />
+                <ScalarProperty Name="YearOfCompletion" ColumnName="YearOfCompletion" />
+                <ScalarProperty Name="Experiance" ColumnName="Experiance" />
+                <ScalarProperty Name="ResumeFile" ColumnName="ResumeFile" />
+                <ScalarProperty Name="FullName1" ColumnName="FullName1" />
+                <ScalarProperty Name="Email1" ColumnName="Email1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetApplicants" FunctionName="INTERNS_HUBModel.Store.sp_GetApplicants">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="INTERNS_HUBModel.sp_GetApplicants_Result">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Place" ColumnName="Place" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="HighestQualification" ColumnName="HighestQualification" />
+                <ScalarProperty Name="YearOfCompletion" ColumnName="YearOfCompletion" />
+                <ScalarProperty Name="Experiance" ColumnName="Experiance" />
+                <ScalarProperty Name="ResumeFile" ColumnName="ResumeFile" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

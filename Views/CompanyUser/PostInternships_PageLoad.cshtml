@@ -1,0 +1,121 @@
+﻿@model INTERNS_HUB.Models.Internships
+@{
+    
+    Layout = "~/Views/Shared/CompanyDashboardLayout.cshtml";
+}
+
+
+@using(Html.BeginForm("PostInternship_BtnClick", "CompanyUser", FormMethod.Post, new { id = "internshipForm", @class = "row g-3" }))
+{
+    <div class="content">
+        <style>
+            .content {
+                position: fixed;
+                top: 0;
+                left: 300px; /* Adjust to match sidebar width */
+                right: 0;
+                bottom: 0;
+                padding: 20px;
+                box-sizing: border-box; /* Include padding in width calculation */
+                overflow-y: auto; /* Enable vertical scrolling if content overflows */
+                background-color: #f8f9fa;
+            }
+
+            .special-field {
+                background-color: #d9e2e7;
+                padding: 20px;
+                border-radius: 5px;
+                width: calc(100% - 300px); /* Adjust to accommodate sidebar width and content margin */
+                box-sizing: border-box; /* Include padding in width calculation */
+                max-width: 800px; /* Limit max width to prevent stretching on large screens */
+            }
+
+                .special-field h1 {
+                    margin-bottom: 20px;
+                }
+
+                .special-field .row {
+                    margin-bottom: 10px;
+                }
+
+            .form-label {
+                font-weight: bold;
+                color: #333;
+            }
+
+            .form-control {
+                margin-bottom: 10px;
+            }
+
+            .btn-primary {
+                background-color: #264653;
+                border-color: #264653;
+            }
+
+                .btn-primary:hover {
+                    background-color: #20568b;
+                    border-color: #20568b;
+                }
+        </style>
+
+
+        <div class="special-field">
+            <h1>Post New Internship</h1>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label style="font-weight: bold; color: #333;"> Title</label>
+                    @Html.TextBox("Title", null, new { @class = "form-control", placeholder = "Enter job title", required = "required" })
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold; color: #333;"> Description</label>
+                    @Html.TextArea("Description", null, new { @class = "form-control", rows = "3", placeholder = "Enter job description", required = "required" })
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold; color: #333;"> Location</label>
+                    @Html.TextBox("Location", null, new { @class = "form-control", placeholder = "Enter job location", required = "required" })
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold; color: #333;"> Type</label>
+                    <select name="Type" class="form-select" required>
+                        <option value="">Select job type</option>
+                        <option value="full-time">Full-Time</option>
+                        <option value="part-time">Part-Time</option>
+                        <option value="remote">Remote</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold; color: #333;">Skills Required</label>
+                    @Html.TextBox("SkillsRequired", null, new { @class = "form-control", placeholder = "Enter skills required", required = "required" })
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold; color: #333;">Starting Date</label>
+                    @Html.TextBox("StartDate", null, new { @class = "form-control", type = "date", required = "required" })
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold; color: #333;"> Duration</label>
+                    @Html.TextBox("Duration", null, new { @class = "form-control", placeholder = "Enter duration", required = "required" })
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold; color: #333;">Stipend</label>
+                    @Html.TextBox("Stipend", null, new { @class = "form-control", placeholder = "Enter stipend", required = "required" })
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold; color: #333;">Openings</label>
+                    @Html.TextBox("Openings", null, new { @class = "form-control", type = "number", placeholder = "Enter number of openings", required = "required" })
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold; color: #333;">DeadLine</label>
+                    @Html.TextBox("Deadline", null, new { @class = "form-control", type = "date", required = "required" })
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold; color: #333;">ContactEmail</label>
+                    @Html.TextBox("ContactEmail", null, new { @class = "form-control", type = "email", placeholder = "Enter contact email", required = "required" })
+                </div>
+
+                <!-- Add more Razor controls for other fields -->
+            </div>
+            <button type="submit" class="btn btn-primary">Post Internship</button>
+        </div>
+    </div>
+}
+

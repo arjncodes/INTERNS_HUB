@@ -1,0 +1,30 @@
+﻿/* Existing styles */
+
+body {
+    font-family: 'Spectral', serif;
+    background-color: #fff;
+}
+
+.navbar {
+    font-family: 'Work Sans', sans-serif;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.navbar-nav .nav-item {
+    margin-right: 10px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+}
+
+.special-field {
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,72 @@
+﻿@model INTERNS_HUB.Models.PostedInternshipsViewModel
+@{
+    Layout = "~/Views/Shared/CompanyDashboardLayout.cshtml";
+}
+
+<!-- Content Start -->
+<div class="content">
+    <style>
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .special-field {
+            background-color: #d9e2e7;
+            color: #050000;
+            text-align: center;
+            padding: 20px;
+            margin: 50px auto;
+            width: 80%;
+            border-radius: 10px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background-color: #264653;
+            border-color: #264653;
+        }
+
+            .btn-primary:hover {
+                background-color: #20568b;
+                border-color: #20568b;
+            }
+    </style>
+
+    <div class="container-fluid pt-4 px-4">
+        <h1 class="text-center mb-4">Posted Jobs</h1>
+        <div class="row g-4">
+            @foreach (var job in Model.PostedJobs)
+            {
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@job.Title</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@job.CompanyName</h6>
+                            <p class="card-text">@job.Description</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><i class="bi bi-geo-alt"></i> @job.Location</li>
+                                <li class="list-group-item"><i class="bi bi-clock"></i> Start Date: @job.StartDate.ToShortDateString()</li>
+                                <li class="list-group-item"><i class="bi bi-calendar-event"></i> Duration: @job.Duration</li>
+                                <li class="list-group-item"><i class="bi bi-cash"></i> Stipend: @job.Stipend</li>
+                                <li class="list-group-item"><i class="bi bi-person"></i> Openings: @job.Openings</li>
+                                <li class="list-group-item"><i class="bi bi-calendar-check"></i> Deadline: @job.Deadline.ToShortDateString()</li>
+                            </ul>
+                            <a href="@Url.Action("EditInternship_PageLoad", "CompanyUser", new { id = job.Id })" class="btn btn-primary mt-3 edit-job-btn">Edit</a>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+<!-- Content End -->

@@ -1,0 +1,107 @@
+﻿@model INTERNS_HUB.Models.CandidateProfile
+@{
+    ViewBag.Title = "UserProfile_PageLoad";
+    Layout = "~/Views/Shared/UserDashboardLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("UserProfile_BtnClick", "NormalUser", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Profile</div>
+                    <div class="card-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Age)
+                            @Html.TextBoxFor(model => model.Age, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Gender)
+                            @Html.DropDownListFor(model => model.Gender, new SelectList(new[] { "Male", "Female", "Other" }), "Select Gender", new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Place)
+                            @Html.TextBoxFor(model => model.Place, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Phone)
+                            @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.HighestQualification)
+                            @Html.TextBoxFor(model => model.HighestQualification, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.HighestQualification, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.YearOfCompletion)
+                            @Html.TextBox("YearOfCompletion", null, new { @class = "form-control", @id = "yearOfCompletion", type = "date", required = "required" })
+                            @Html.ValidationMessageFor(model => model.YearOfCompletion, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Experiance)
+                            @Html.TextBoxFor(model => model.Experiance, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.Experiance, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ResumeFile)
+                            <input type="file" name="ResumeFile" id="ResumeFile" class="form-control-file" required="required" />
+                            @Html.ValidationMessageFor(model => model.ResumeFile, "", new { @class = "text-danger" })
+                        </div>
+                         <!--Current skills-->
+                        <div class="form-group">
+                            <label for="skills">Current Skills</label>
+                            <br />
+                            @foreach (var skill in Model.Skills)
+                            {
+                                if (Model.SelectedSkills.Contains(skill.SkillsId.ToString()))
+                                {
+                                    <form action="@Url.Action("RemoveSkill", "NormalUser")" method="post">
+                                        @Html.Hidden("skillId", skill.SkillsId)
+                                        <input type="submit" value="@skill.SkillsName" class="btn btn-link" />
+                                    </form>
+                                }
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            <label for="skills">Skills</label>
+                            @foreach (var skill in Model.Skills)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="SelectedSkills" id="@("skill_" + skill.SkillsId)" value="@skill.SkillsId" @(Model.SelectedSkills.Contains(skill.SkillsId.ToString()) ? "checked" : "") />
+                                    <label class="form-check-label" for="@("skill_" + skill.SkillsId)">@skill.SkillsName</label>
+                                </div>
+                            }
+                        </div>
+
+
+                        <br />
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@if (TempData["Message"] != null)
+{
+    <script>
+        alert('@TempData["Message"]');
+    </script>
+}

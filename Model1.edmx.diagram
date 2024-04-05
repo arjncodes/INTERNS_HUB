@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="912f38b8c3f24859aab6f8ad338c2401" Name="Diagram1">
+        <EntityTypeShape EntityType="INTERNS_HUBModel.UserLoginCredential" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="INTERNS_HUBModel.UserProfile" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="INTERNS_HUBModel.FK_UserProfile_UserLoginCredentials" />
+        <EntityTypeShape EntityType="INTERNS_HUBModel.Skill" Width="1.5" PointX="3.75" PointY="5.875" />
+        <EntityTypeShape EntityType="INTERNS_HUBModel.UserSkill" Width="1.5" PointX="6" PointY="1.75" />
+        <AssociationConnector Association="INTERNS_HUBModel.FK_UserSkill_Skills" />
+        <AssociationConnector Association="INTERNS_HUBModel.FK_UserSkill_UserLoginCredentials" />
+        <EntityTypeShape EntityType="INTERNS_HUBModel.CompanyRegistration" Width="1.5" PointX="6.375" PointY="4.75" />
+        <EntityTypeShape EntityType="INTERNS_HUBModel.Internship" Width="1.5" PointX="0.75" PointY="5.75" />
+        <AssociationConnector Association="INTERNS_HUBModel.FK_Internships_CompanyRegistrations" />
+        <EntityTypeShape EntityType="INTERNS_HUBModel.CompanyApplication" Width="1.5" PointX="8.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

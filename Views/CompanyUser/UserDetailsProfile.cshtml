@@ -1,0 +1,105 @@
+﻿@model INTERNS_HUB.UserProfile
+@{
+    ViewBag.Title = "UserDetailsProfile";
+    Layout = "~/Views/Shared/CompanyDashboardLayout.cshtml";
+}
+
+<div class="content">
+    <style>
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .user-details-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin: 50px auto;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+            .user-details-container h2 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+        .user-details-item {
+            margin-bottom: 10px;
+        }
+
+        .user-details-label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .user-details-value {
+            margin-left: 10px;
+        }
+    </style>
+
+    <div class="user-details-container">
+        <h2>User Details</h2>
+        <div class="user-details-item">
+            <span class="user-details-label">Full Name:</span>
+            <span class="user-details-value">@Model.FullName</span>
+        </div>
+
+        <div class="user-details-item">
+            <span class="user-details-label">Email:</span>
+            <span class="user-details-value">@Model.Email</span>
+        </div>
+
+        <div class="user-details-item">
+            <span class="user-details-label">Age:</span>
+            <span class="user-details-value">@Model.Age</span>
+        </div>
+
+        <div class="user-details-item">
+            <span class="user-details-label">Gender:</span>
+            <span class="user-details-value">@Model.Gender</span>
+        </div>
+
+        <div class="user-details-item">
+            <span class="user-details-label">Phone:</span>
+            <span class="user-details-value">@Model.Phone</span>
+        </div>
+
+        <div class="user-details-item">
+            <span class="user-details-label">Place:</span>
+            <span class="user-details-value">@Model.Place</span>
+        </div>
+
+        <div class="user-details-item">
+            <span class="user-details-label">Highest Qualification:</span>
+            <span class="user-details-value">@Model.HighestQualification</span>
+        </div>
+
+        <div class="user-details-item">
+            <span class="user-details-label">Year of Completion:</span>
+            <span class="user-details-value">@Model.YearOfCompletion</span>
+        </div>
+
+        <div class="user-details-item">
+            <span class="user-details-label">Experience:</span>
+            <span class="user-details-value">@Model.Experiance</span>
+        </div>
+
+        <div class="user-details-item">
+
+            @if (!string.IsNullOrEmpty(Model.ResumeFile))
+            {
+                <a href="@Url.Action("DownloadResume", "CompanyUser", new { resumeFile = Model.ResumeFile })"><span class="user-details-label">Resume</span></a>
+            }
+            else
+            {
+                <span>No Resume</span>
+            }
+        </div>
+
+        <div class="user-details-item">
+            <a href="javascript:history.back()" class="btn btn-primary">Back</a>
+        </div>
+    </div>
+</div>
